@@ -11,7 +11,7 @@
     "build watch": "webpack --watch",
     "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch",
     "dev-server": "webpack-dev-server",
-    "start"  : "node server/server.js"
+    "start": "node server/server.js"
   },
   "author": "Deniz Barkın Takmaz",
   "license": "ISC",
@@ -29,6 +29,7 @@
     "moment": "^2.22.2",
     "node-sass": "^4.9.4",
     "normalize.css": "^8.0.0",
+    "numeral": "^2.0.6",
     "react": "^16.5.2",
     "react-addons-shallow-compare": "^15.6.2",
     "react-dates": "^12.7.0",
