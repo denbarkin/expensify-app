@@ -1,19 +1,22 @@
+WEBPACK Optimization for production:
 
-GIT - Version control System
-$ git -version
+1. Change the mode to production in the configuration file          (webpack.config.js) and use start script as
+    "build:prod": "webpack -p --env production"
+2. Add env paramater production to config file by change the config type to
+    function. Thus env parameter passed to config file.
+3. Change webpack dev-tool source map based on production parameter.
 
-
-$ git init
-    .git folder added to project
-
-$ git status
-    shows all folders and files current status in repsitory:( prject )
-
-$ git add .
-    add all files except .gitignore paths to the project to track the changes until next commit command.
-
-$ git commit -m "type the message here"
-    commit the recent changes.
+GREAT SAVING !!!
+This optimizations reduced the size from 6.5 MiB to 612 KiB. Then we had,bundle.js and bundle.js.map source files.
 
 
+extract-text-webpack-plugin
+---------------------------------------------------------------------------
+It moves all the required *.css modules in entry chunks into a separate CSS file. So your styles are no longer inlined into the JS bundle, but in a separate CSS file (styles.css). If your total stylesheet volume is big, it will be faster because the CSS bundle is loaded in parallel to the JS bundle.
 
+Warning - This plugin is not working with webpack 4.0 or above.
+Use mini-css-extract-plugin instead of it.
+
+Express Framework for Production
+--------------------------------
+server/server.js file includes basic express functions to run up server.
