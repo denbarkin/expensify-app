@@ -10,7 +10,8 @@
     "build:prod": "webpack -p --env production",
     "build watch": "webpack --watch",
     "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch",
-    "dev-server": "webpack-dev-server"
+    "dev-server": "webpack-dev-server",
+    "start"  : "node server/server.js"
   },
   "author": "Deniz Barkın Takmaz",
   "license": "ISC",
@@ -25,8 +26,6 @@
     "babel-loader": "^8.0.4",
     "css-loader": "^1.0.0",
     "express": "^4.16.4",
-    "jest": "^22.4.4",
-    "live-server": "^1.2.0",
     "moment": "^2.22.2",
     "node-sass": "^4.9.4",
     "normalize.css": "^8.0.0",
@@ -41,10 +40,10 @@
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "uuid": "^3.3.2",
-    "webpack": "^4.20.2",
-    "webpack-dev-server": "^3.1.9"
+    "webpack": "^4.20.2"
   },
   "devDependencies": {
+    "jest": "^22.4.4",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.0",
     "enzyme-to-json": "^3.3.4",
@@ -52,6 +51,8 @@
     "mini-css-extract-plugin": "^0.4.4",
     "raf": "^3.3.2",
     "react-test-renderer": "^16.6.0",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "live-server": "^1.2.0",
+    "webpack-dev-server": "^3.1.9"
   }
 }

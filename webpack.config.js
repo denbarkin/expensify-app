@@ -14,7 +14,7 @@ module.exports = (env) => {
         mode : 'production', // change to production before flight
         entry: './src/app.js',
         output : {
-            path : path.join(__dirname,'public'),
+            path : path.join(__dirname,'public', 'dist'),
             filename : 'bundle.js'
         },
         module : {
@@ -48,7 +48,8 @@ module.exports = (env) => {
         devtool : isProduction ? 'source-map' : 'cheap-module-eval-source-map', // change to production setting before flight
         devServer : {
             contentBase : path.join(__dirname,'public'),
-            historyApiFallback: true // 404 API always call same index.html for 404
+            historyApiFallback: true,// 404 API always call same index.html for 404
+            publicPath : '/dist/'
         }   
     }
 }
