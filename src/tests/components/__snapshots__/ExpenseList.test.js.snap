@@ -6,6 +6,33 @@ exports[`should render ExpenseList 1`] = `
     Expense List
   </h1>
   <Connect(ExpenseListFilter) />
+  <ExpenseSummary
+    expenses={
+      Array [
+        Object {
+          "amount": 10,
+          "createdAt": 0,
+          "description": "Gum",
+          "id": 1,
+          "note": "just a gum",
+        },
+        Object {
+          "amount": 1020,
+          "createdAt": -345600000,
+          "description": "Water Bill",
+          "id": 2,
+          "note": "Big bill",
+        },
+        Object {
+          "amount": 100000,
+          "createdAt": 345600000,
+          "description": "New Car",
+          "id": 3,
+          "note": "Tesla car",
+        },
+      ]
+    }
+  />
   <Connect(ExpenseListItem)
     amount={10}
     createdAt={0}
