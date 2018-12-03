@@ -59,8 +59,12 @@ export default class ExpenseForm extends React.Component
             // Clear Error Log 
             error = '';
             this.setState(() => ({error}))
-            this.props.onSubmit(this.state);
-       
+            this.props.onSubmit({
+                description : this.state.description,
+                note : this.state.note,
+                amount : this.state.amount,
+                createdAt : this.state.createdAt.valueOf()
+            });
         }
     }
     

@@ -6,7 +6,7 @@ exports[`should render ExpenseList 1`] = `
     Expense List
   </h1>
   <Connect(ExpenseListFilter) />
-  <ExpenseSummary
+  <Connect(ExpenseSummary)
     expenses={
       Array [
         Object {

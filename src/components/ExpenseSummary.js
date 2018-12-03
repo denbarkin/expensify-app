@@ -1,23 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import getTotalExpenses from "../selectors/expenses-total";
 import getCountExpenses from "../selectors/expenses-count";
+import getSelectedExpenses from "../selectors/expenses";
 import numeral from "numeral";
 
 
 export class ExpenseSummary extends Component {
     constructor(props){
         super(props);
-        this.total = getTotalExpenses(props.expenses);
-        this.count = getCountExpenses(props.expenses);
     }
-
+1
     render() {
         return (
             <div>
-                <p>Number of #{this.count} expenses total is {numeral(this.total).format('$0,0.00')}</p>
+                <h3>Number of #{this.props.count} expenses and total is {numeral(this.props.total).format('$0,0.00')}</h3>
             </div>
         )
     }
 }
 
-export default ExpenseSummary
+const mapStateToProps = (state) => {
+    const expenses = getSelectedExpenses(state.expenses, state.filters);
+
+    return{ 
+        count : expenses.length,
+        total : getTotalExpenses(expenses)
+    }
+}
+
+export default connect(mapStateToProps)(ExpenseSummary);
