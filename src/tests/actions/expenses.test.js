@@ -2,6 +2,7 @@ import {
     addExpenseV2, 
     startAddExpense,
     editExpense,
+    startEditExpense,
     removeExpense,
     startRemoveExpense,
     addExpense, 
@@ -72,6 +73,26 @@ test('should setup edit expense action object', () => {
         updates : { amount : 123.12 }
     })
 });
+
+test('should edit expense on firebase database', (done) => {
+    const store = mockStore({});
+    const id = expenses[0].id;
+    const updates = { amount : 1234.56}
+    store.dispatch(startEditExpense(id, updates)).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type:'EDIT_EXPENSE',
+            id,
+            updates
+        })
+
+        database.ref(`expenses/${id}`).once('value').then((snapshot) => {
+            expect(snapshot.val().amount).toBe(updates.amount);
+            done();
+        })        
+    })    
+})
+
 
 // Dynamicly created UUID() is prevent toEqual work as expected.
 // so expect.any(String) can be used to assertion dynamic created fields.

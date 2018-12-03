@@ -64,7 +64,7 @@ export const removeExpense = ({id} = {}) => {
         }
     })
 }
-// Asynch acton return arrow function.
+// Asynch action return arrow function.
 export const startRemoveExpense = ({id} = {}) => {
     return (dispatch) => {
         return database.ref(`expenses/${id}`).remove().then(() => {
@@ -82,6 +82,14 @@ export const editExpense = (id, updates ) => {
             updates
         }
     );
+}
+// Asynch action return arrow function.
+export const startEditExpense = (id, updates) => {
+    return (dispatch) => {
+        return database.ref(`expenses/${id}`).update(updates).then(() => {
+            dispatch(editExpense(id,updates));
+        })
+    }
 }
 
 export const setExpenses = (expenses) => (
