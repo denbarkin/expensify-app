@@ -1,6 +1,5 @@
 import expenses from "../fixtures/expenses";
 import expenseReducer from "../../reducers/expenses";
-import { stat } from "fs";
 
 
 test('should set default state', () => {
@@ -58,3 +57,14 @@ test('should edit expense object', () => {
     const state = expenseReducer(expenses,action);
     expect(state[1].amount).toBe(amount)
 });
+
+
+test('should set expenses', () => {
+  const action = {
+      type : 'SET_EXPENSES',
+      expenses : [expenses[1]]
+  }
+
+  const state = expenseReducer(expenses, action);
+  expect(state).toEqual([expenses[1]]);
+})

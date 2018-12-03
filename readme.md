@@ -33,6 +33,8 @@ server/server.js file includes basic express functions to run up server.
  Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env. 
  Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology.
 
+ .env.test and .env.development file set process.env varaibles for test and development firebase databases.
+
 
 
 

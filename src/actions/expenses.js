@@ -64,6 +64,14 @@ export const removeExpense = ({id} = {}) => {
         }
     })
 }
+// Asynch acton return arrow function.
+export const startRemoveExpense = ({id} = {}) => {
+    return (dispatch) => {
+        return database.ref(`expenses/${id}`).remove().then(() => {
+            dispatch(removeExpense({id}))
+        })
+    }
+}
 
 // Edit Expense
 export const editExpense = (id, updates ) => {
@@ -74,4 +82,37 @@ export const editExpense = (id, updates ) => {
             updates
         }
     );
+}
+
+export const setExpenses = (expenses) => (
+    {
+        type: 'SET_EXPENSES',
+        expenses
+    } 
+)
+
+// Asynchronous Redux Action with Function.
+// 1. Fetch All expense data once.
+// 2. Parse the data into array
+// 3. Dispatch setExpenses to update store.
+export const startSetExpenses = () => {
+    return (dispatch) => {
+        // 1. Fetch All expense data once.
+        return database.ref('expenses').once('value')
+        .then((snapshot) => {
+            // 2. Parse the data into array
+            const expenses = [];
+            snapshot.forEach(childsnapshot => {
+                expenses.push({
+                    id : childsnapshot.key,
+                    ...childsnapshot.val()
+                })
+            });
+            // 3. Dispatch setExpenses to update store.
+            dispatch(setExpenses(expenses));
+
+        }).catch((error) => {
+            console.log('Error Set Expenses Asynch: ', error.message);
+        })
+    }
 }
