@@ -16,7 +16,7 @@ exports[`should render Expense Form Correctly 1`] = `
       onChange={[Function]}
       placeholder="amount"
       type="text"
-      value=""
+      value={0}
     />
     <SingleDatePicker
       anchorDirection="left"
@@ -125,7 +125,7 @@ exports[`should render Expense Form with error for invalid submission 1`] = `
       onChange={[Function]}
       placeholder="amount"
       type="text"
-      value=""
+      value={0}
     />
     <SingleDatePicker
       anchorDirection="left"
@@ -237,7 +237,7 @@ exports[`should render Expense Form with error for invalid submission 2`] = `
       onChange={[Function]}
       placeholder="amount"
       type="text"
-      value=""
+      value={0}
     />
     <SingleDatePicker
       anchorDirection="left"
@@ -346,7 +346,7 @@ exports[`should render ExpenseForm with Data 1`] = `
       onChange={[Function]}
       placeholder="amount"
       type="text"
-      value={10.2}
+      value={1020}
     />
     <SingleDatePicker
       anchorDirection="left"
