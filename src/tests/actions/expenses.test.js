@@ -18,13 +18,16 @@ import thunk from 'redux-thunk'
 const middlewares = [thunk] // add your middlewares like `redux-thunk`
 const mockStore = configureStore(middlewares)
 
+const uid = 'mytestuid';
+const defaultAuthState = { auth : { uid }}
+
 beforeEach((done) => {
     const expenseData = {};
     expenses.forEach(({id, description,amount,note,createdAt}) => {
         expenseData[id] = { description, amount, note, createdAt};
     });
 
-    database.ref('expenses').set(expenseData).then(() => done());
+    database.ref(`users/${uid}/expenses`).set(expenseData).then(() => done());
 })
 
 test('should setup remove expense action object', () => {
@@ -44,7 +47,7 @@ test('should setup remove expense action object', () => {
 // 5. Assert record removed from firebase db.
 // 6. Call done() to finalize asynch test.
 test('should remove expense from firebase', (done) => {
-    const store = mockStore({});
+    const store = mockStore(defaultAuthState);
     const id = expenses[2].id;
     store.dispatch(startRemoveExpense({ id : id })).then(() => {
         const actions = store.getActions();
@@ -55,7 +58,7 @@ test('should remove expense from firebase', (done) => {
             }
         })
         // Check firebase test db to record removed from it.
-        database.ref(`expenses/${id}`).once('value').then((snapshot) => {
+        database.ref(`users/${uid}/expenses/${id}`).once('value').then((snapshot) => {
             expect(snapshot.val()).toBeFalsy();
             done();
         })
@@ -75,7 +78,7 @@ test('should setup edit expense action object', () => {
 });
 
 test('should edit expense on firebase database', (done) => {
-    const store = mockStore({});
+    const store = mockStore(defaultAuthState);
     const id = expenses[0].id;
     const updates = { amount : 1234.56}
     store.dispatch(startEditExpense(id, updates)).then(() => {
@@ -86,7 +89,7 @@ test('should edit expense on firebase database', (done) => {
             updates
         })
 
-        database.ref(`expenses/${id}`).once('value').then((snapshot) => {
+        database.ref(`users/${uid}/expenses/${id}`).once('value').then((snapshot) => {
             expect(snapshot.val().amount).toBe(updates.amount);
             done();
         })        
@@ -110,7 +113,7 @@ test('should setup add expense with provided params', () => {
 // 3. Expect Dispatched Actions to equal to dispatched in the function.
 // 4. Check the Database to Expense added in firebase.
 test('should add expense to database and store', (done) => {
-    const store = mockStore({}) // create empty store for testing.
+    const store = mockStore(defaultAuthState) // create empty store for testing.
     const expenseData = {
         description : 'Test Bill',
         amount : 1,
@@ -133,7 +136,7 @@ test('should add expense to database and store', (done) => {
         ))
 
         // Check the data added to database.
-        database.ref(`expenses/${actions[0].expense.id}`).once('value')
+        database.ref(`users/${uid}/expenses/${actions[0].expense.id}`).once('value')
         .then((snapshot) => {
             expect(snapshot.val()).toEqual(expenseData); 
             // Forcing JEST to wait until this point of time with call done.

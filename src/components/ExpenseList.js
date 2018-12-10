@@ -9,7 +9,7 @@ import ExpenseSummary from "./ExpenseSummary";
 
 export const ExpenseList = (props) => (
     <div>
-        <h1>Expense List</h1>
+        <h2>Expense List</h2>
         <ExpenseListFilter />
         <ExpenseSummary expenses={props.expenses} />
         {props.expenses.map((expense) => {

@@ -32,7 +32,7 @@ export const addExpenseV2 = (expense) => {
 // Asynchronous Redux Action with Function.
 // "redux-thunk": "^2.3.0", is used to send function to Redux Action.
 export const startAddExpense = (expenseData = {}) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         const {
             description = '',
             note = '',
@@ -41,8 +41,9 @@ export const startAddExpense = (expenseData = {}) => {
         } = expenseData; //destructure
 
         const expense = {description, note, amount,createdAt};
+        const uid = getState().auth.uid;
 
-        return database.ref('expenses').push(expense)
+        return database.ref(`users/${uid}/expenses`).push(expense)
             .then((ref) => {
                 dispatch(addExpenseV2({
                     id : ref.key,
@@ -54,7 +55,6 @@ export const startAddExpense = (expenseData = {}) => {
             })
     }
 }
-
 // Remove Expense
 export const removeExpense = ({id} = {}) => {
     return({
@@ -66,13 +66,13 @@ export const removeExpense = ({id} = {}) => {
 }
 // Asynch action return arrow function.
 export const startRemoveExpense = ({id} = {}) => {
-    return (dispatch) => {
-        return database.ref(`expenses/${id}`).remove().then(() => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}/expenses/${id}`).remove().then(() => {
             dispatch(removeExpense({id}))
         })
     }
 }
-
 // Edit Expense
 export const editExpense = (id, updates ) => {
     return (
@@ -85,8 +85,9 @@ export const editExpense = (id, updates ) => {
 }
 // Asynch action return arrow function.
 export const startEditExpense = (id, updates) => {
-    return (dispatch) => {
-        return database.ref(`expenses/${id}`).update(updates).then(() => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}/expenses/${id}`).update(updates).then(() => {
             dispatch(editExpense(id,updates));
         })
     }
@@ -104,9 +105,10 @@ export const setExpenses = (expenses) => (
 // 2. Parse the data into array
 // 3. Dispatch setExpenses to update store.
 export const startSetExpenses = () => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
         // 1. Fetch All expense data once.
-        return database.ref('expenses').once('value')
+        return database.ref(`users/${uid}/expenses`).once('value')
         .then((snapshot) => {
             // 2. Parse the data into array
             const expenses = [];
